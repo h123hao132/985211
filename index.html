@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandas数据分析实战训练营</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --deep-blue: #0F172A;
+            --tech-cyan: #06B6D4;
+            --light-gray: #F1F5F9;
+        }
+        .bg-deep-blue { background-color: var(--deep-blue); }
+        .bg-tech-cyan { background-color: var(--tech-cyan); }
+        .bg-light-gray { background-color: var(--light-gray); }
+        .text-deep-blue { color: var(--deep-blue); }
+        .text-tech-cyan { color: var(--tech-cyan); }
+        .border-tech-cyan { border-color: var(--tech-cyan); }
+        .hover\:bg-tech-cyan-dark:hover { background-color: #0891b2; }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15); }
+        .gradient-text { background: linear-gradient(90deg, #06B6D4, #22D3EE); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    </style>
+</head>
+<body class="bg-light-gray">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-tech-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-deep-blue">Pandas训练营</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#courses" class="text-deep-blue hover:text-tech-cyan transition-colors">课程内容</a>
+                    <a href="#projects" class="text-deep-blue hover:text-tech-cyan transition-colors">实战项目</a>
+                    <a href="#skills" class="text-deep-blue hover:text-tech-cyan transition-colors">技能体系</a>
+                    <a href="#faq" class="text-deep-blue hover:text-tech-cyan transition-colors">常见问题</a>
+                </div>
+                <button class="bg-tech-cyan text-white px-6 py-2 rounded-lg hover:bg-tech-cyan-dark transition-colors">
+                    开始学习
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-deep-blue">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#courses" class="block text-deep-blue hover:text-tech-cyan">课程内容</a>
+                <a href="#projects" class="block text-deep-blue hover:text-tech-cyan">实战项目</a>
+                <a href="#skills" class="block text-deep-blue hover:text-tech-cyan">技能体系</a>
+                <a href="#faq" class="block text-deep-blue hover:text-tech-cyan">常见问题</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-16 bg-gradient-to-br from-deep-blue via-slate-800 to-deep-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Pandas数据分析实战训练营
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    从零基础到实战高手，系统掌握Pandas数据处理、可视化与机器学习技能
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="location.href='project-detail.html'" class="bg-tech-cyan text-white px-8 py-3 rounded-lg font-semibold hover:bg-tech-cyan-dark transition-all transform hover:scale-105">
+                        <i class="fas fa-play-circle mr-2"></i>开始学习
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-deep-blue transition-all">
+                        <i class="fas fa-book-open mr-2"></i>查看课程
+                    </button>
+                </div>
+            </div>
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-tech-cyan">10+</div>
+                    <div class="text-gray-400 mt-2">实战项目</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-tech-cyan">50+</div>
+                    <div class="text-gray-400 mt-2">课时内容</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-tech-cyan">1000+</div>
+                    <div class="text-gray-400 mt-2">练习题目</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-tech-cyan">98%</div>
+                    <div class="text-gray-400 mt-2">学员好评</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="courses" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-deep-blue mb-4">课程体系</h2>
+                <p class="text-gray-600">循序渐进，系统学习数据分析全流程</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-light-gray rounded-2xl p-6 card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="w-14 h-14 bg-tech-cyan/10 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-tech-cyan text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-deep-blue mb-2">数据清洗基础</h3>
+                    <p class="text-gray-600 mb-4">掌握Pandas核心操作、数据清洗技巧、缺失值处理</p>
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <span class="bg-tech-cyan/10 text-tech-cyan px-3 py-1 rounded-full">入门</span>
+                        <span>12课时</span>
+                    </div>
+                </div>
+                <div class="bg-light-gray rounded-2xl p-6 card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="w-14 h-14 bg-tech-cyan/10 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-bar text-tech-cyan text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-deep-blue mb-2">数据可视化</h3>
+                    <p class="text-gray-600 mb-4">精通Matplotlib、Seaborn，打造专业数据报告</p>
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">进阶</span>
+                        <span>15课时</span>
+                    </div>
+                </div>
+                <div class="bg-light-gray rounded-2xl p-6 card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="w-14 h-14 bg-tech-cyan/10 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-tech-cyan text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-deep-blue mb-2">机器学习实战</h3>
+                    <p class="text-gray-600 mb-4">KMeans聚类、回归分析、模型评估与优化</p>
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full">高级</span>
+                        <span>18课时</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 bg-light-gray">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-deep-blue mb-4">实战项目</h2>
+                <p class="text-gray-600">10个真实业务场景项目，边学边练</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-tech-cyan/20 to-blue-200 flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-5xl text-tech-cyan animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">电商购物车分析</h3>
+                        <p class="text-gray-600 text-sm mb-4">用户购物行为分析、购物车转化率提升策略</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">入门级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-green-200 to-emerald-200 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-5xl text-green-600 animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">销售数据分析</h3>
+                        <p class="text-gray-600 text-sm mb-4">销售趋势分析、区域业绩对比、预测模型</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">入门级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-purple-200 to-violet-200 flex items-center justify-center">
+                        <i class="fas fa-users text-5xl text-purple-600 animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">用户行为分析</h3>
+                        <p class="text-gray-600 text-sm mb-4">用户画像构建、行为漏斗分析、留存率分析</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">进阶级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-orange-200 to-amber-200 flex items-center justify-center">
+                        <i class="fas fa-star text-5xl text-orange-600 animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">RFM用户价值模型</h3>
+                        <p class="text-gray-600 text-sm mb-4">用户分层、价值评估、精准营销策略</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">进阶级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-pink-200 to-rose-200 flex items-center justify-center">
+                        <i class="fas fa-chart-pie text-5xl text-pink-600 animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">KMeans客户分群</h3>
+                        <p class="text-gray-600 text-sm mb-4">聚类分析、客户细分、个性化推荐</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">高级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden card-hover cursor-pointer" onclick="location.href='project-detail.html'">
+                    <div class="h-40 bg-gradient-to-br from-indigo-200 to-blue-200 flex items-center justify-center">
+                        <i class="fas fa-trending-up text-5xl text-indigo-600 animate-float"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-2">销售预测分析</h3>
+                        <p class="text-gray-600 text-sm mb-4">时间序列分析、销量预测、库存优化</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">高级</span>
+                            <span class="text-tech-cyan text-sm">开始学习 →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-deep-blue mb-4">技能雷达图</h2>
+                <p class="text-gray-600">全面提升数据分析师核心技能</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="relative">
+                    <svg viewBox="0 0 400 400" class="w-full max-w-md mx-auto">
+                        <polygon points="200,50 286.6,150 286.6,300 200,350 113.4,300 113.4,150" fill="none" stroke="#E2E8F0" stroke-width="2"/>
+                        <polygon points="200,100 263.3,175 263.3,275 200,300 136.7,275 136.7,175" fill="none" stroke="#E2E8F0" stroke-width="2"/>
+                        <polygon points="200,150 236.6,200 236.6,250 200,250 163.4,250 163.4,200" fill="none" stroke="#E2E8F0" stroke-width="2"/>
+                        <line x1="200" y1="50" x2="200" y2="350" stroke="#E2E8F0"/>
+                        <line x1="113.4" y1="150" x2="286.6" y2="150" stroke="#E2E8F0"/>
+                        <line x1="113.4" y1="300" x2="286.6" y2="300" stroke="#E2E8F0"/>
+                        <polygon points="200,70 260,145 260,255 200,280 140,255 140,145" fill="rgba(6, 182, 212, 0.2)" stroke="#06B6D4" stroke-width="3"/>
+                        <text x="200" y="40" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">数据清洗</text>
+                        <text x="300" y="155" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">可视化</text>
+                        <text x="300" y="305" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">统计分析</text>
+                        <text x="200" y="370" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">机器学习</text>
+                        <text x="100" y="305" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">业务理解</text>
+                        <text x="100" y="155" text-anchor="middle" class="text-sm font-semibold fill-deep-blue">Python</text>
+                    </svg>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">数据清洗与预处理</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">数据可视化</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">统计分析方法</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">机器学习建模</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">业务理解能力</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-700">Python编程</span>
+                        <div class="w-48 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-tech-cyan rounded-full" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-16 bg-light-gray">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-deep-blue mb-4">常见问题</h2>
+                <p class="text-gray-600">解答您的疑问</p>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-white rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-light-gray transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-deep-blue">零基础可以学习吗？</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-4 text-gray-600 hidden">
+                        完全可以！课程从Python基础开始讲起，循序渐进，即使没有编程经验也能轻松上手。每节课都配有详细的代码讲解和练习，帮助您快速掌握技能。
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-light-gray transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-deep-blue">需要安装什么软件？</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-4 text-gray-600 hidden">
+                        课程使用Python环境，建议安装Anaconda或直接使用在线平台如Google Colab。课程中提供的代码可以直接运行，无需额外配置。
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-light-gray transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-deep-blue">学完能达到什么水平？</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-4 text-gray-600 hidden">
+                        完成全部课程后，您将具备独立完成数据分析项目的能力，可以处理真实业务数据、制作专业数据报告、构建机器学习模型，达到初级数据分析师的水平。
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden">
+                    <button class="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-light-gray transition-colors" onclick="toggleFaq(this)">
+                        <span class="font-semibold text-deep-blue">课程有时间限制吗？</span>
+                        <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-4 text-gray-600 hidden">
+                        课程购买后永久有效，您可以根据自己的节奏安排学习时间。建议每天学习1-2小时，3-4周可以完成全部课程。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-br from-deep-blue to-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">准备好开始学习了吗？</h2>
+            <p class="text-gray-300 mb-8">加入数千名学员的行列，开启您的数据分析师之旅</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="location.href='project-detail.html'" class="bg-tech-cyan text-white px-8 py-3 rounded-lg font-semibold hover:bg-tech-cyan-dark transition-all transform hover:scale-105">
+                    免费试学
+                </button>
+                <button class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-deep-blue transition-all">
+                    联系客服
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-deep-blue text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-tech-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Pandas训练营</span>
+                    </div>
+                    <p class="text-sm">专注于数据分析实战培训，帮助学员快速掌握Pandas技能。</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">课程</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">数据清洗</a></li>
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">数据可视化</a></li>
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">机器学习</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">资源</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">学习路线</a></li>
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">实战项目</a></li>
+                        <li><a href="#" class="hover:text-tech-cyan transition-colors">常见问题</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><i class="fas fa-envelope mr-2"></i> contact@pandas-camp.com</li>
+                        <li><i class="fas fa-phone mr-2"></i> 400-123-4567</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
+                <p>© 2024 Pandas数据分析实战训练营. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="code-runner" class="fixed bottom-6 right-6 z-50">
+        <div id="code-runner-toggle" class="bg-tech-cyan text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer shadow-lg hover:bg-tech-cyan-dark transition-colors">
+            <i class="fas fa-code text-xl"></i>
+        </div>
+        <div id="code-runner-content" class="hidden absolute bottom-16 right-0 bg-white rounded-xl shadow-2xl w-96 max-h-[500px] overflow-hidden">
+            <div class="bg-deep-blue text-white p-4 flex justify-between items-center">
+                <h3 class="font-semibold">代码运行器</h3>
+                <button id="code-runner-close" class="text-white hover:text-tech-cyan">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <textarea id="code-editor" class="w-full h-40 px-3 py-2 border border-gray-300 rounded-lg font-mono text-sm resize-none" placeholder="输入Python代码..."></textarea>
+                <button id="run-code" class="w-full mt-3 bg-tech-cyan text-white py-2 rounded-lg hover:bg-tech-cyan-dark transition-colors">运行代码</button>
+                <div id="code-output" class="mt-3 w-full h-24 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 font-mono text-sm overflow-auto">运行结果将显示在这里...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFaq(el) {
+            const content = el.nextElementSibling;
+            const icon = el.querySelector('i');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        document.getElementById('code-runner-toggle').addEventListener('click', function() {
+            document.getElementById('code-runner-content').classList.toggle('hidden');
+        });
+
+        document.getElementById('code-runner-close').addEventListener('click', function() {
+            document.getElementById('code-runner-content').classList.add('hidden');
+        });
+
+        document.getElementById('run-code').addEventListener('click', function() {
+            const code = document.getElementById('code-editor').value;
+            const output = document.getElementById('code-output');
+            output.textContent = '运行中...';
+            setTimeout(() => {
+                if (code.includes('print')) {
+                    output.textContent = 'Hello, Pandas!\n数据分析师训练营欢迎您！';
+                } else if (code.includes('df')) {
+                    output.textContent = 'DataFrame示例:\n   Name  Age  Score\n0  Alice   25     90\n1    Bob   30     85\n2  Carol   28     92';
+                } else {
+                    output.textContent = '代码运行成功！\n\n尝试输入:\nprint("Hello World")\n或\nimport pandas as pd\ndf = pd.DataFrame({"Name":["Alice","Bob"],"Age":[25,30]})\nprint(df)';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

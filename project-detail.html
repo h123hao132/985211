@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电商数据清洗实战 - Pandas训练营</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --deep-blue: #0F172A;
+            --tech-cyan: #06B6D4;
+            --light-gray: #F1F5F9;
+        }
+        .bg-deep-blue { background-color: var(--deep-blue); }
+        .bg-tech-cyan { background-color: var(--tech-cyan); }
+        .bg-light-gray { background-color: var(--light-gray); }
+        .text-deep-blue { color: var(--deep-blue); }
+        .text-tech-cyan { color: var(--tech-cyan); }
+        .border-tech-cyan { border-color: var(--tech-cyan); }
+        .hover\:bg-tech-cyan-dark:hover { background-color: #0891b2; }
+    </style>
+</head>
+<body class="bg-light-gray">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                    <div class="w-10 h-10 bg-gradient-to-br from-tech-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-deep-blue">Pandas训练营</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html#courses" class="text-deep-blue hover:text-tech-cyan transition-colors">课程内容</a>
+                    <a href="index.html#projects" class="text-deep-blue hover:text-tech-cyan transition-colors">实战项目</a>
+                    <a href="learning-progress.html" class="text-deep-blue hover:text-tech-cyan transition-colors">学习进度</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-8 bg-gradient-to-br from-deep-blue via-slate-800 to-deep-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">电商数据清洗实战</h1>
+                    <p class="text-gray-300 mb-6">掌握Pandas数据清洗核心技能，处理真实电商业务数据</p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="bg-tech-cyan/20 text-tech-cyan px-4 py-2 rounded-full text-sm">入门级</span>
+                        <span class="bg-white/10 text-white px-4 py-2 rounded-full text-sm">12课时</span>
+                        <span class="bg-white/10 text-white px-4 py-2 rounded-full text-sm">3个项目</span>
+                    </div>
+                </div>
+                <div class="w-32 h-32 bg-tech-cyan/20 rounded-2xl flex items-center justify-center">
+                    <i class="fas fa-database text-tech-cyan text-5xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex gap-4 overflow-x-auto pb-2">
+                <button class="tab-btn active border-tech-cyan text-tech-cyan px-6 py-3 rounded-lg font-medium whitespace-nowrap" data-tab="course">课程内容</button>
+                <button class="tab-btn border-transparent text-deep-blue-lighter px-6 py-3 rounded-lg font-medium whitespace-nowrap" data-tab="practice">训练任务</button>
+                <button class="tab-btn border-transparent text-deep-blue-lighter px-6 py-3 rounded-lg font-medium whitespace-nowrap" data-tab="test">自测练习</button>
+                <button class="tab-btn border-transparent text-deep-blue-lighter px-6 py-3 rounded-lg font-medium whitespace-nowrap" data-tab="assessment">评估测试</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="tab-content">
+                <div id="course" class="tab-pane active">
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-tech-cyan/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-book-open text-tech-cyan text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-deep-blue mb-2">第1课：Pandas基础与数据读取</h3>
+                                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                                        <span><i class="fas fa-clock mr-1"></i>20分钟</span>
+                                        <span><i class="fas fa-file-code mr-1"></i>代码示例</span>
+                                    </div>
+                                    <div class="space-y-2 text-gray-600">
+                                        <p>• 学习目标：掌握Pandas数据结构、读取各类数据源</p>
+                                        <p>• 知识点：DataFrame、Series、read_csv、read_excel</p>
+                                        <pre class="bg-deep-blue text-white p-4 rounded-lg text-sm mt-4 overflow-x-auto">
+import pandas as pd
+import numpy as np
+
+# 读取CSV文件
+df = pd.read_csv('ecommerce_data.csv')
+
+# 查看数据基本信息
+print(df.info())
+print('\\n数据前5行：')
+print(df.head())
+
+# 查看数据形状
+print(f'\\n数据形状：{df.shape}')</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-tech-cyan/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-search text-tech-cyan text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-deep-blue mb-2">第2课：数据探索与检查</h3>
+                                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                                        <span><i class="fas fa-clock mr-1"></i>25分钟</span>
+                                        <span><i class="fas fa-bar-chart mr-1"></i>数据分析</span>
+                                    </div>
+                                    <div class="space-y-2 text-gray-600">
+                                        <p>• 学习目标：掌握数据探索方法，发现数据质量问题</p>
+                                        <p>• 知识点：info()、describe()、value_counts()、isnull()</p>
+                                        <pre class="bg-deep-blue text-white p-4 rounded-lg text-sm mt-4 overflow-x-auto">
+# 查看数据统计信息
+print(df.describe())
+
+# 查看各列数据类型
+print(df.dtypes)
+
+# 检查缺失值
+print('\\n缺失值统计：')
+print(df.isnull().sum())
+
+# 查看类别列的取值分布
+print('\\n类别分布：')
+print(df['category'].value_counts())</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-tech-cyan/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-wrench text-tech-cyan text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-deep-blue mb-2">第3课：缺失值处理</h3>
+                                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                                        <span><i class="fas fa-clock mr-1"></i>30分钟</span>
+                                        <span><i class="fas fa-exclamation-triangle mr-1"></i>易错点</span>
+                                    </div>
+                                    <div class="space-y-2 text-gray-600">
+                                        <p>• 学习目标：掌握多种缺失值处理策略</p>
+                                        <p>• 知识点：dropna()、fillna()、插值法</p>
+                                        <p>• 易错点：盲目删除缺失值会导致数据丢失，应根据业务场景选择合适策略</p>
+                                        <pre class="bg-deep-blue text-white p-4 rounded-lg text-sm mt-4 overflow-x-auto">
+# 删除缺失值
+df_clean = df.dropna(subset=['order_id', 'customer_id'])
+
+# 填充缺失值
+df['price'] = df['price'].fillna(df['price'].mean())
+df['quantity'] = df['quantity'].fillna(1)
+
+# 使用前向填充
+df['date'] = df['date'].fillna(method='ffill')
+
+# 检查处理结果
+print('\\n处理后缺失值：')
+print(df.isnull().sum())</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="practice" class="tab-pane hidden">
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl p-6 practice-card">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">基础练习</span>
+                                    <h3 class="text-lg font-semibold text-deep-blue">练习1：读取并检查数据</h3>
+                                </div>
+                                <button class="bg-tech-cyan text-white px-4 py-2 rounded-lg hover:bg-tech-cyan-dark transition-colors">开始练习</button>
+                            </div>
+                            <div class="space-y-3 text-gray-600">
+                                <p>任务要求：</p>
+                                <ol class="list-decimal list-inside space-y-1">
+                                    <li>读取 ecommerce_data.csv 文件</li>
+                                    <li>查看数据的基本信息（info）</li>
+                                    <li>查看数据的统计描述（describe）</li>
+                                    <li>检查各列的缺失值情况</li>
+                                </ol>
+                                <pre class="bg-deep-blue text-white p-4 rounded-lg text-sm mt-4 overflow-x-auto">
+import pandas as pd
+
+# 练习代码
+df = pd.read_csv('ecommerce_data.csv')
+
+# 1. 查看基本信息
+print(df.info())
+
+# 2. 查看统计描述
+print(df.describe())
+
+# 3. 检查缺失值
+print(df.isnull().sum())</pre>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 practice-card">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">独立实操</span>
+                                    <h3 class="text-lg font-semibold text-deep-blue">练习2：处理缺失值</h3>
+                                </div>
+                                <button class="bg-tech-cyan text-white px-4 py-2 rounded-lg hover:bg-tech-cyan-dark transition-colors">开始实操</button>
+                            </div>
+                            <div class="space-y-3 text-gray-600">
+                                <p>任务要求：</p>
+                                <ol class="list-decimal list-inside space-y-1">
+                                    <li>删除 order_id 和 customer_id 为空的记录</li>
+                                    <li>用均值填充 price 列的缺失值</li>
+                                    <li>用中位数填充 quantity 列的缺失值</li>
+                                    <li>用前向填充填充 date 列</li>
+                                </ol>
+                                <pre class="bg-deep-blue text-white p-4 rounded-lg text-sm mt-4 overflow-x-auto">
+import pandas as pd
+
+df = pd.read_csv('ecommerce_data.csv')
+
+# 删除关键列缺失值
+df = df.dropna(subset=['order_id', 'customer_id'])
+
+# 均值填充价格
+df['price'] = df['price'].fillna(df['price'].mean())
+
+# 中位数填充数量
+df['quantity'] = df['quantity'].fillna(df['quantity'].median())
+
+# 前向填充日期
+df['date'] = df['date'].fillna(method='ffill')
+
+print('处理完成！')</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="test" class="tab-pane hidden">
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-deep-blue">单选题1</h3>
+                                <span class="text-sm text-gray-500">1/5</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">以下哪个方法可以查看DataFrame的基本信息？</p>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                    <input type="radio" name="q1" class="text-tech-cyan">
+                                    <span class="text-gray-700">df.describe()</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                    <input type="radio" name="q1" class="text-tech-cyan">
+                                    <span class="text-gray-700">df.info()</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                    <input type="radio" name="q1" class="text-tech-cyan">
+                                    <span class="text-gray-700">df.head()</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                    <input type="radio" name="q1" class="text-tech-cyan">
+                                    <span class="text-gray-700">df.shape()</span>
+                                </label>
+                            </div>
+                            <button class="toggle-answer mt-4 bg-light-gray text-deep-blue px-4 py-2 rounded-lg flex items-center gap-2">
+                                <span>查看答案和解析</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="hidden mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                                <p class="font-semibold text-green-700 mb-2">正确答案：B. df.info()</p>
+                                <p class="text-gray-600 text-sm">解析：df.info() 用于查看DataFrame的基本信息，包括列名、数据类型、非空值数量等。df.describe() 用于查看统计描述，df.head() 用于查看前几行数据，df.shape 是属性不是方法。</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-deep-blue">代码改错题</h3>
+                                <span class="text-sm text-gray-500">2/5</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">以下代码存在错误，请找出并修复：</p>
+                            <pre class="bg-red-50 p-4 rounded-lg text-sm border border-red-200">
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+# 检查缺失值
+print(df.isnull)
+
+# 填充缺失值
+df.fillna(0)</pre>
+                            <button class="toggle-answer mt-4 bg-light-gray text-deep-blue px-4 py-2 rounded-lg flex items-center gap-2">
+                                <span>查看答案和解析</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="hidden mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                                <p class="font-semibold text-green-700 mb-2">修复后的代码：</p>
+                                <pre class="bg-deep-blue text-white p-3 rounded-lg text-sm">
+import pandas as pd
+
+df = pd.read_csv('data.csv')
+
+# 检查缺失值 - 需要加括号
+print(df.isnull())
+
+# 填充缺失值 - 需要赋值
+df = df.fillna(0)</pre>
+                                <p class="text-gray-600 text-sm mt-2">解析：isnull() 是方法需要加括号；fillna() 返回新的DataFrame，需要赋值才能保存修改。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="assessment" class="tab-pane hidden">
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-xl font-semibold text-deep-blue mb-4">单元测评</h3>
+                        <p class="text-gray-600 mb-6">请完成以下测试题，检验您对数据清洗知识的掌握程度。</p>
+                        <div class="space-y-6">
+                            <div>
+                                <p class="text-gray-700 mb-3">1. Pandas中用于读取CSV文件的方法是？</p>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a1">
+                                        <span class="ml-2">pd.read()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a1">
+                                        <span class="ml-2">pd.read_csv()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a1">
+                                        <span class="ml-2">pd.load_csv()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a1">
+                                        <span class="ml-2">pd.csv_read()</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-gray-700 mb-3">2. 以下哪种方法不能处理缺失值？</p>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a2">
+                                        <span class="ml-2">dropna()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a2">
+                                        <span class="ml-2">fillna()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a2">
+                                        <span class="ml-2">drop_duplicates()</span>
+                                    </label>
+                                    <label class="p-3 border rounded-lg cursor-pointer hover:bg-light-gray">
+                                        <input type="radio" name="a2">
+                                        <span class="ml-2">interpolate()</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="mt-6 w-full bg-tech-cyan text-white py-3 rounded-lg font-semibold hover:bg-tech-cyan-dark transition-colors">提交测评</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-deep-blue text-gray-400 py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2024 Pandas数据分析实战训练营. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    tabBtns.forEach(b => {
+                        b.classList.remove('active', 'border-tech-cyan', 'text-tech-cyan');
+                        b.classList.add('border-transparent', 'text-deep-blue-lighter');
+                    });
+                    
+                    tabPanes.forEach(pane => {
+                        pane.classList.add('hidden');
+                        pane.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active', 'border-tech-cyan', 'text-tech-cyan');
+                    this.classList.remove('border-transparent', 'text-deep-blue-lighter');
+                    
+                    const activePane = document.getElementById(tabId);
+                    if (activePane) {
+                        activePane.classList.remove('hidden');
+                        activePane.classList.add('active');
+                    }
+                });
+            });
+
+            const toggleAnswerBtns = document.querySelectorAll('.toggle-answer');
+            toggleAnswerBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const answerContent = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    answerContent.classList.toggle('hidden');
+                    if (icon) {
+                        icon.classList.toggle('fa-chevron-up');
+                        icon.classList.toggle('fa-chevron-down');
+                    }
+                });
+            });
+
+            const practiceButtons = document.querySelectorAll('button');
+            practiceButtons.forEach(btn => {
+                const text = btn.textContent.trim();
+                if (text.includes('开始练习') || text.includes('开始实操')) {
+                    btn.addEventListener('click', function() {
+                        alert('练习功能已启动！\n\n请在本地运行代码进行练习。');
+                    });
+                } else if (text.includes('提交测评')) {
+                    btn.addEventListener('click', function() {
+                        alert('测评提交成功！\n\n您的得分：85/100\n\n继续努力！');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

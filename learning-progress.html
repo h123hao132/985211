@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习进度 - Pandas训练营</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --deep-blue: #0F172A;
+            --tech-cyan: #06B6D4;
+            --light-gray: #F1F5F9;
+        }
+        .bg-deep-blue { background-color: var(--deep-blue); }
+        .bg-tech-cyan { background-color: var(--tech-cyan); }
+        .bg-light-gray { background-color: var(--light-gray); }
+        .text-deep-blue { color: var(--deep-blue); }
+        .text-tech-cyan { color: var(--tech-cyan); }
+        .border-tech-cyan { border-color: var(--tech-cyan); }
+        .hover\:bg-tech-cyan-dark:hover { background-color: #0891b2; }
+    </style>
+</head>
+<body class="bg-light-gray">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+                    <div class="w-10 h-10 bg-gradient-to-br from-tech-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl font-bold text-deep-blue">Pandas训练营</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html#courses" class="text-deep-blue hover:text-tech-cyan transition-colors">课程内容</a>
+                    <a href="index.html#projects" class="text-deep-blue hover:text-tech-cyan transition-colors">实战项目</a>
+                    <a href="learning-progress.html" class="text-tech-cyan font-medium">学习进度</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-24 pb-8 bg-gradient-to-br from-deep-blue via-slate-800 to-deep-blue">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">我的学习进度</h1>
+                <p class="text-gray-300">追踪您的学习历程，查看成就与进步</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-4">课程进度</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-light-gray rounded-xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-tech-cyan/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-database text-tech-cyan"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-deep-blue">电商数据清洗实战</h4>
+                                        <p class="text-sm text-gray-500">入门级 · 12课时</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-lg font-bold text-tech-cyan">75%</span>
+                                    <p class="text-sm text-gray-500">9/12课时</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-light-gray rounded-xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-chart-bar text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-deep-blue">销售数据可视化</h4>
+                                        <p class="text-sm text-gray-500">入门级 · 15课时</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-lg font-bold text-green-600">100%</span>
+                                    <p class="text-sm text-gray-500">15/15课时</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-light-gray rounded-xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-users text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-deep-blue">用户行为分析</h4>
+                                        <p class="text-sm text-gray-500">进阶级 · 18课时</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-lg font-bold text-purple-600">33%</span>
+                                    <p class="text-sm text-gray-500">6/18课时</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-4">学习统计</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 bg-tech-cyan/10 rounded-xl">
+                                <div class="text-3xl font-bold text-tech-cyan">28</div>
+                                <div class="text-sm text-gray-600 mt-1">学习课时</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-100 rounded-xl">
+                                <div class="text-3xl font-bold text-green-600">5</div>
+                                <div class="text-sm text-gray-600 mt-1">完成项目</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-100 rounded-xl">
+                                <div class="text-3xl font-bold text-purple-600">45</div>
+                                <div class="text-sm text-gray-600 mt-1">练习题数</div>
+                            </div>
+                            <div class="text-center p-4 bg-orange-100 rounded-xl">
+                                <div class="text-3xl font-bold text-orange-600">88%</div>
+                                <div class="text-sm text-gray-600 mt-1">平均正确率</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-4">最近学习</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4 p-3 bg-light-gray rounded-lg">
+                                <div class="w-10 h-10 bg-tech-cyan/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-play-circle text-tech-cyan"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-deep-blue">第3课：缺失值处理</h4>
+                                    <p class="text-sm text-gray-500">电商数据清洗实战 · 30分钟前</p>
+                                </div>
+                                <span class="text-sm text-tech-cyan">继续学习</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-3 bg-light-gray rounded-lg">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-deep-blue">练习：处理缺失值</h4>
+                                    <p class="text-sm text-gray-500">电商数据清洗实战 · 1小时前</p>
+                                </div>
+                                <span class="text-sm text-green-600">已完成</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-4">成就徽章</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-tech-cyan/20 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-trophy text-tech-cyan text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">初学者</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-green-200 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-award text-green-600 text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">数据清洗大师</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-lock text-gray-400 text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">可视化专家</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-lock text-gray-400 text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">机器学习达人</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-orange-200 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-star text-orange-500 text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">连续7天学习</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-lock text-gray-400 text-2xl"></i>
+                                </div>
+                                <p class="text-sm text-gray-600">结业证书</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-deep-blue mb-4">学习建议</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-lightbulb text-yellow-500 mt-1"></i>
+                                <div>
+                                    <h4 class="font-medium text-deep-blue">继续学习用户行为分析</h4>
+                                    <p class="text-sm text-gray-600">您已完成6课时，继续学习可以掌握用户画像构建技能。</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-target text-tech-cyan mt-1"></i>
+                                <div>
+                                    <h4 class="font-medium text-deep-blue">完成RFM用户价值模型</h4>
+                                    <p class="text-sm text-gray-600">这是进阶级项目，完成后可以提升您的用户分析能力。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-deep-blue text-gray-400 py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>© 2024 Pandas数据分析实战训练营. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

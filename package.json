@@ -1,0 +1,11 @@
+{
+  "name": "pandas-data-analysis-camp",
+  "version": "1.0.0",
+  "description": "Pandas数据分析实战训练营网站",
+  "scripts": {
+    "build": "echo 'Static HTML site - no build required'"
+  },
+  "keywords": ["pandas", "data analysis", "training"],
+  "author": "Pandas Data Analysis Camp",
+  "license": "MIT"
+}
