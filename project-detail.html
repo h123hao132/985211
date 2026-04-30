@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>电商数据清洗实战 - Pandas训练营</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -27,6 +28,125 @@
         .quiz-option.selected { background-color: #ecfeff; border-color: #06b6d4; }
         .expand-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .expand-content.expanded { max-height: 5000px; }
+        .code-runner-panel {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 600px;
+            max-height: 80vh;
+            background: #1e1e1e;
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
+            transform: translateY(calc(100% - 50px));
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .code-runner-panel.open {
+            transform: translateY(0);
+        }
+        .code-runner-header {
+            background: #2d2d2d;
+            padding: 12px 16px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .code-runner-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        .code-textarea {
+            width: 100%;
+            min-height: 200px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: 1px solid #3d3d3d;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .code-output {
+            background: #1a1a1a;
+            border: 1px solid #3d3d3d;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            min-height: 150px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #98c379;
+            white-space: pre-wrap;
+        }
+        .code-output.error {
+            color: #e06c75;
+        }
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(6, 182, 212, 0.5);
+        }
+        .floating-btn i {
+            color: white;
+            font-size: 24px;
+        }
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #3d3d3d;
+            border-top-color: #06b6d4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .preset-btn {
+            background: #2d2d2d;
+            color: #d4d4d4;
+            border: 1px solid #3d3d3d;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            background: #3d3d3d;
+            border-color: #06b6d4;
+        }
     </style>
 </head>
 <body class="bg-light-gray">
@@ -1769,7 +1889,317 @@ print(f"发现{len(duplicates)}条重复记录")</pre>
         </div>
     </footer>
 
+    <!-- 悬浮代码运行器按钮 -->
+    <div class="floating-btn" id="floatingBtn" onclick="toggleCodeRunner()">
+        <i class="fas fa-code"></i>
+    </div>
+
+    <!-- 代码运行器面板 -->
+    <div class="code-runner-panel" id="codeRunnerPanel">
+        <div class="code-runner-header" onclick="toggleCodeRunner()">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-terminal text-tech-cyan"></i>
+                <span class="text-gray-300 font-medium">Python 代码运行器</span>
+                <span class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs" id="pyodideStatus">加载中...</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="text-gray-400 hover:text-white" onclick="event.stopPropagation(); loadPresetCode('pandas')">
+                    <i class="fas fa-book text-sm" title="加载Pandas示例"></i>
+                </button>
+                <button class="text-gray-400 hover:text-white" onclick="event.stopPropagation(); loadPresetCode('numpy')">
+                    <i class="fas fa-calculator text-sm" title="加载NumPy示例"></i>
+                </button>
+                <button class="text-gray-400 hover:text-white" onclick="event.stopPropagation(); loadPresetCode('dataframe')">
+                    <i class="fas fa-table text-sm" title="加载DataFrame示例"></i>
+                </button>
+                <i class="fas fa-chevron-up text-gray-400" id="panelArrow"></i>
+            </div>
+        </div>
+        <div class="code-runner-body">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="text-gray-400 text-sm">预设示例：</span>
+                <button class="preset-btn" onclick="loadPresetCode('basics')">基础语法</button>
+                <button class="preset-btn" onclick="loadPresetCode('pandas')">Pandas基础</button>
+                <button class="preset-btn" onclick="loadPresetCode('dataframe')">DataFrame操作</button>
+                <button class="preset-btn" onclick="loadPresetCode('cleaning')">数据清洗</button>
+            </div>
+            <textarea class="code-textarea" id="codeInput" placeholder="在此输入Python代码..."># Pandas 数据分析示例
+import pandas as pd
+import numpy as np
+
+# 创建示例数据
+data = {
+    'name': ['张三', '李四', '王五', '赵六'],
+    'age': [25, 30, 35, 28],
+    'score': [85.5, 92.0, 78.5, 88.0]
+}
+df = pd.DataFrame(data)
+
+# 显示数据
+print("数据预览:")
+print(df)
+print("\n基本统计:")
+print(df.describe())</textarea>
+            <div class="flex gap-2 mt-3">
+                <button class="flex-1 bg-tech-cyan text-white py-2 rounded-lg hover:bg-cyan-600 transition-colors" id="runBtn" onclick="runCode()">
+                    <i class="fas fa-play mr-2"></i>运行代码
+                </button>
+                <button class="px-4 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700" onclick="clearOutput()">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <button class="px-4 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700" onclick="copyOutput()">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <div class="mt-3">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-400 text-sm">运行结果:</span>
+                    <span class="text-gray-500 text-xs" id="execTime"></span>
+                </div>
+                <div class="code-output" id="codeOutput">等待运行...</div>
+            </div>
+        </div>
+        <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="text-center">
+                <div class="spinner mx-auto mb-3"></div>
+                <span class="text-gray-400">正在加载Python环境...</span>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Pyodide Python 运行环境
+        let pyodide = null;
+        let isLoading = false;
+
+        async function initPyodide() {
+            if (pyodide || isLoading) return;
+            isLoading = true;
+            
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const statusEl = document.getElementById('pyodideStatus');
+            
+            loadingOverlay.classList.remove('hidden');
+            statusEl.textContent = '加载中...';
+            statusEl.className = 'bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded text-xs';
+            
+            try {
+                pyodide = await loadPyodide({
+                    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
+                });
+                
+                // 加载必要的包
+                await pyodide.loadPackage(['pandas', 'numpy']);
+                
+                statusEl.textContent = '已就绪';
+                statusEl.className = 'bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs';
+                loadingOverlay.classList.add('hidden');
+            } catch (error) {
+                statusEl.textContent = '加载失败';
+                statusEl.className = 'bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-xs';
+                console.error('Pyodide加载失败:', error);
+                loadingOverlay.classList.add('hidden');
+            }
+            
+            isLoading = false;
+        }
+
+        // 切换代码运行器面板
+        function toggleCodeRunner() {
+            const panel = document.getElementById('codeRunnerPanel');
+            const arrow = document.getElementById('panelArrow');
+            const btn = document.getElementById('floatingBtn');
+            
+            panel.classList.toggle('open');
+            
+            if (panel.classList.contains('open')) {
+                arrow.classList.remove('fa-chevron-up');
+                arrow.classList.add('fa-chevron-down');
+                btn.style.transform = 'translateY(0)';
+                initPyodide();
+            } else {
+                arrow.classList.remove('fa-chevron-down');
+                arrow.classList.add('fa-chevron-up');
+            }
+        }
+
+        // 预设代码示例
+        const presetCodes = {
+            basics: `# Python 基础语法示例
+# 变量与数据类型
+name = "Pandas训练营"
+version = 1.0
+is_active = True
+
+# 列表操作
+numbers = [1, 2, 3, 4, 5]
+squared = [x ** 2 for x in numbers]
+
+# 字典操作
+user = {
+    'name': '张三',
+    'age': 25,
+    'city': '北京'
+}
+
+print(f"欢迎来到 {name}!")
+print(f"数字平方: {squared}")
+print(f"用户信息: {user}")`,
+
+            pandas: `# Pandas 基础操作
+import pandas as pd
+
+# 创建 Series
+s = pd.Series([1, 3, 5, 7, 9], index=['a', 'b', 'c', 'd', 'e'])
+print("Series示例:")
+print(s)
+
+# 创建 DataFrame
+df = pd.DataFrame({
+    '产品': ['手机', '电脑', '平板'],
+    '价格': [2999, 5999, 1999],
+    '销量': [150, 80, 120]
+})
+print("\nDataFrame示例:")
+print(df)
+print(f"\n平均价格: {df['价格'].mean()}")`,
+
+            dataframe: `# DataFrame 高级操作
+import pandas as pd
+import numpy as np
+
+# 创建销售数据
+df = pd.DataFrame({
+    '日期': ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04'],
+    '产品': ['A', 'B', 'A', 'C'],
+    '销量': [100, 150, 200, 80],
+    '单价': [10, 20, 10, 30]
+})
+
+# 添加计算列
+df['销售额'] = df['销量'] * df['单价']
+
+# 分组统计
+grouped = df.groupby('产品')['销售额'].sum()
+
+print("销售数据:")
+print(df)
+print("\n各产品总销售额:")
+print(grouped)`,
+
+            cleaning: `# 数据清洗示例
+import pandas as pd
+import numpy as np
+
+# 创建带有缺失值和重复的数据
+df = pd.DataFrame({
+    'name': ['张三', '李四', '张三', '王五', None],
+    'age': [25, None, 25, 30, 28],
+    'score': [85.5, 92.0, None, 88.0, 90.0]
+})
+
+print("原始数据:")
+print(df)
+
+# 删除重复行
+df_clean = df.drop_duplicates()
+print("\n删除重复后:")
+print(df_clean)
+
+# 填充缺失值
+df_clean['age'] = df_clean['age'].fillna(df_clean['age'].mean())
+df_clean['score'] = df_clean['score'].fillna(df_clean['score'].mean())
+
+print("\n填充缺失值后:")
+print(df_clean)`
+        };
+
+        // 加载预设代码
+        function loadPresetCode(type) {
+            const codeInput = document.getElementById('codeInput');
+            if (presetCodes[type]) {
+                codeInput.value = presetCodes[type];
+            }
+        }
+
+        // 运行代码
+        async function runCode() {
+            if (!pyodide) {
+                document.getElementById('codeOutput').textContent = 'Python环境正在加载中，请稍候...';
+                return;
+            }
+
+            const codeInput = document.getElementById('codeInput');
+            const codeOutput = document.getElementById('codeOutput');
+            const runBtn = document.getElementById('runBtn');
+            const execTimeEl = document.getElementById('execTime');
+            
+            const code = codeInput.value;
+            if (!code.trim()) {
+                codeOutput.textContent = '请输入代码！';
+                return;
+            }
+
+            runBtn.disabled = true;
+            runBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>运行中...';
+            codeOutput.textContent = '';
+            codeOutput.classList.remove('error');
+            
+            const startTime = performance.now();
+            
+            try {
+                // 重定向 stdout 来捕获 print 输出
+                pyodide.runPython(`
+import sys
+from io import StringIO
+sys.stdout = StringIO()
+sys.stderr = StringIO()
+                `);
+                
+                // 运行用户代码
+                await pyodide.runPythonAsync(code);
+                
+                // 获取输出
+                const stdout = pyodide.runPython('sys.stdout.getvalue()');
+                const stderr = pyodide.runPython('sys.stderr.getvalue()');
+                
+                const endTime = performance.now();
+                execTimeEl.textContent = `执行时间: ${(endTime - startTime).toFixed(2)}ms`;
+                
+                if (stdout) {
+                    codeOutput.textContent = stdout;
+                } else if (stderr) {
+                    codeOutput.textContent = stderr;
+                    codeOutput.classList.add('error');
+                } else {
+                    codeOutput.textContent = '(代码执行完成，无输出)';
+                }
+            } catch (error) {
+                const endTime = performance.now();
+                execTimeEl.textContent = `执行时间: ${(endTime - startTime).toFixed(2)}ms`;
+                codeOutput.textContent = '执行错误:\n' + error.message;
+                codeOutput.classList.add('error');
+            }
+            
+            runBtn.disabled = false;
+            runBtn.innerHTML = '<i class="fas fa-play mr-2"></i>运行代码';
+        }
+
+        // 清空输出
+        function clearOutput() {
+            document.getElementById('codeOutput').textContent = '等待运行...';
+            document.getElementById('execTime').textContent = '';
+            document.getElementById('codeOutput').classList.remove('error');
+        }
+
+        // 复制输出
+        function copyOutput() {
+            const output = document.getElementById('codeOutput').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                alert('输出已复制到剪贴板!');
+            });
+        }
+
         // 标签页切换
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
